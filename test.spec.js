@@ -24,7 +24,9 @@ it('should shut the server down', (done) => {
   server1.tryShutdown(() => {
     server2.bindAsync(`localhost:${PORT}`, CREDENTIALS, (_) => {
       server2.start();
-      done();
+      server2.tryShutdown(() => {
+        done();
+      });
     });
   });
 });
